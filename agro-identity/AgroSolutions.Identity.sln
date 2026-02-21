@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgroSolutions.Identity.Infr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgroSolutions.Identity.Tests", "AgroSolutions.Identity.Tests\AgroSolutions.Identity.Tests.csproj", "{430BE7F2-2AD2-4CEC-B297-2033398933BD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgroSolutions.Shared", "..\agro-shared\AgroSolutions.Shared\AgroSolutions.Shared.csproj", "{0B01FF50-E97F-470F-A420-90EB66458F2B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,5 +44,9 @@ Global
 		{430BE7F2-2AD2-4CEC-B297-2033398933BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{430BE7F2-2AD2-4CEC-B297-2033398933BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{430BE7F2-2AD2-4CEC-B297-2033398933BD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0B01FF50-E97F-470F-A420-90EB66458F2B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B01FF50-E97F-470F-A420-90EB66458F2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B01FF50-E97F-470F-A420-90EB66458F2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B01FF50-E97F-470F-A420-90EB66458F2B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

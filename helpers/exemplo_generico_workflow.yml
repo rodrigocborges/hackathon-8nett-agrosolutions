@@ -1,0 +1,69 @@
+name: 'CD - NOME_DO_MICROSSERVICO'
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - 'NOME_DO_MICROSSERVICO/**'              # Gatilho 1: Mudanças no próprio microsserviço
+      - 'agro-shared/**'                        # Gatilho 2: Mudanças na biblioteca de eventos compartilhada
+      - '.github/workflows/cd-NOME_DO_MICROSSERVICO.yml' # Gatilho 3: Mudanças nesta pipeline
+
+env:
+  SERVICE_NAME: 'NOME_DO_MICROSSERVICO'         # Usado para montar os caminhos das pastas
+  IMAGE_NAME: 'NOME_DO_MICROSSERVICO'           # Usado para nomear a imagem no ACR
+  
+  # Variáveis globais compartilhadas
+  AZURE_RESOURCE_GROUP: 'hackathon-8nett'
+  ACR_LOGIN_SERVER: 'acragrosolutions.azurecr.io'
+  CLUSTER_NAME: 'aks-agrosolutions'
+
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 'Checkout Repo'
+        uses: actions/checkout@v4
+
+      - name: 'Login to Azure'
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: 'Login to ACR'
+        uses: azure/docker-login@v1
+        with:
+          login-server: ${{ env.ACR_LOGIN_SERVER }}
+          username: ${{ secrets.ACR_USERNAME }}
+          password: ${{ secrets.ACR_PASSWORD }}
+
+      - name: 'Build and Push Docker Image'
+        run: |
+          # O build usa o contexto raiz (.) para enxergar o agro-shared
+          docker build . -f ./${{ env.SERVICE_NAME }}/Dockerfile -t ${{ env.ACR_LOGIN_SERVER }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+          docker push ${{ env.ACR_LOGIN_SERVER }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+
+      - name: 'Set AKS Context'
+        uses: azure/aks-set-context@v3
+        with:
+          resource-group: ${{ env.AZURE_RESOURCE_GROUP }}
+          cluster-name: ${{ env.CLUSTER_NAME }}
+
+      # Este bloco você pode customizar depois se um serviço precisar de uma secret específica,
+      # mas como você centralizou as secrets no GitHub, pode deixar o mesmo bloco para todos.
+      - name: 'Create/Update Kubernetes Secrets'
+        run: |
+          kubectl create secret generic agrosolutions-secrets \
+            --from-literal=Jwt__Key='${{ secrets.JWT_KEY }}' \
+            --from-literal=APPLICATIONINSIGHTS_CONNECTION_STRING='${{ secrets.APP_INSIGHTS_CONN_STRING }}' \
+            --from-literal=RabbitMq__Host='${{ secrets.RABBITMQ_HOST }}' \
+            --dry-run=client -o yaml | kubectl apply -f -
+
+      - name: 'Deploy to Kubernetes'
+        run: |
+          # Substitui a tag da imagem no YAML correspondente ao microsserviço
+          sed -i "s|image: .*|image: ${{ env.ACR_LOGIN_SERVER }}/${{ env.IMAGE_NAME }}:${{ github.sha }}|g" ./${{ env.SERVICE_NAME }}/k8s/deployment.yaml
+          
+          # Aplica o manifesto
+          kubectl apply -f ./${{ env.SERVICE_NAME }}/k8s/deployment.yaml

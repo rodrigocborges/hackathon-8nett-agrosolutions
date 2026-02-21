@@ -53,6 +53,8 @@ dotnet add AgroSolutions.Identity.API package Microsoft.ApplicationInsights.AspN
 dotnet add AgroSolutions.Identity.API package MassTransit.RabbitMQ
 dotnet add AgroSolutions.Identity.API package Microsoft.EntityFrameworkCore.Design
 
+dotnet add AgroSolutions.Identity.Application package BCrypt.Net-Next
+
 cd ..
 ```
 </details>
