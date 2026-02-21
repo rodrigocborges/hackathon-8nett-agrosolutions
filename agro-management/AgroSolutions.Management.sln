@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgroSolutions.Management.In
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgroSolutions.Management.Tests", "AgroSolutions.Management.Tests\AgroSolutions.Management.Tests.csproj", "{EFDC7310-2A65-4B13-9DE4-BF1890419936}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgroSolutions.Shared", "..\agro-shared\AgroSolutions.Shared\AgroSolutions.Shared.csproj", "{80F94A94-53F0-4DA3-A8D1-68D87FA9024C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,5 +44,9 @@ Global
 		{EFDC7310-2A65-4B13-9DE4-BF1890419936}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EFDC7310-2A65-4B13-9DE4-BF1890419936}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EFDC7310-2A65-4B13-9DE4-BF1890419936}.Release|Any CPU.Build.0 = Release|Any CPU
+		{80F94A94-53F0-4DA3-A8D1-68D87FA9024C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{80F94A94-53F0-4DA3-A8D1-68D87FA9024C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{80F94A94-53F0-4DA3-A8D1-68D87FA9024C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{80F94A94-53F0-4DA3-A8D1-68D87FA9024C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
