@@ -1,0 +1,46 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgroSolutions.Ingestion.API", "AgroSolutions.Ingestion.API\AgroSolutions.Ingestion.API.csproj", "{AA2B77D5-D44A-4FAF-90FC-173075BE32D2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgroSolutions.Ingestion.Application", "AgroSolutions.Ingestion.Application\AgroSolutions.Ingestion.Application.csproj", "{DDF46851-0E48-4F07-9E2B-E7B8105ECE01}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgroSolutions.Ingestion.Domain", "AgroSolutions.Ingestion.Domain\AgroSolutions.Ingestion.Domain.csproj", "{AF3022B6-ECA1-476C-966B-0E082CB0D4EA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgroSolutions.Ingestion.Infrastructure", "AgroSolutions.Ingestion.Infrastructure\AgroSolutions.Ingestion.Infrastructure.csproj", "{DB5CF16B-4F50-4B86-AA51-8AE2233E8C27}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgroSolutions.Ingestion.Tests", "AgroSolutions.Ingestion.Tests\AgroSolutions.Ingestion.Tests.csproj", "{14FCDFDE-B3FA-44D2-9107-4E756DBF7CA6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AA2B77D5-D44A-4FAF-90FC-173075BE32D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA2B77D5-D44A-4FAF-90FC-173075BE32D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA2B77D5-D44A-4FAF-90FC-173075BE32D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA2B77D5-D44A-4FAF-90FC-173075BE32D2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DDF46851-0E48-4F07-9E2B-E7B8105ECE01}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DDF46851-0E48-4F07-9E2B-E7B8105ECE01}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DDF46851-0E48-4F07-9E2B-E7B8105ECE01}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DDF46851-0E48-4F07-9E2B-E7B8105ECE01}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AF3022B6-ECA1-476C-966B-0E082CB0D4EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF3022B6-ECA1-476C-966B-0E082CB0D4EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF3022B6-ECA1-476C-966B-0E082CB0D4EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF3022B6-ECA1-476C-966B-0E082CB0D4EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DB5CF16B-4F50-4B86-AA51-8AE2233E8C27}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DB5CF16B-4F50-4B86-AA51-8AE2233E8C27}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DB5CF16B-4F50-4B86-AA51-8AE2233E8C27}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DB5CF16B-4F50-4B86-AA51-8AE2233E8C27}.Release|Any CPU.Build.0 = Release|Any CPU
+		{14FCDFDE-B3FA-44D2-9107-4E756DBF7CA6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{14FCDFDE-B3FA-44D2-9107-4E756DBF7CA6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{14FCDFDE-B3FA-44D2-9107-4E756DBF7CA6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{14FCDFDE-B3FA-44D2-9107-4E756DBF7CA6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
