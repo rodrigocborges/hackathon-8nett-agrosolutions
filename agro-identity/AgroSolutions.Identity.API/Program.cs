@@ -24,8 +24,6 @@ builder.Services.AddScoped<IProducerService, ProducerService>();
 // 3. Configura��o do MassTransit (RabbitMQ)
 builder.Services.AddMassTransit(x =>
 {
-    x.SetLicense("Community");
-    
     x.UsingRabbitMq((context, cfg) =>
     {
         var rabbitHost = builder.Configuration["RabbitMq:Host"] ?? "amqp://guest:guest@localhost:5672";

@@ -53,7 +53,6 @@ jobs:
             --from-literal=Jwt__Key='${{ secrets.JWT_KEY }}' \
             --from-literal=APPLICATIONINSIGHTS_CONNECTION_STRING='${{ secrets.APP_INSIGHTS_CONN_STRING }}' \
             --from-literal=RabbitMq__Host='${{ secrets.RABBITMQ_HOST }}' \
-            --from-literal=MT_LICENSE='Open Source' \
             --dry-run=client -o yaml | kubectl apply -f -
 
       - name: 'Deploy to Kubernetes'

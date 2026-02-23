@@ -21,8 +21,6 @@ builder.Services.AddScoped<IAlertRepository, AlertRepository>();
 // 3. Configura��o do MassTransit (Consumers)
 builder.Services.AddMassTransit(x =>
 {
-    x.SetLicense("Community");
-    
     x.AddConsumer<FieldCreatedConsumer>();
     x.AddConsumer<SensorDataConsumer>();
 

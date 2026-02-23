@@ -22,8 +22,6 @@ builder.Services.AddScoped<IIngestionService, IngestionService>();
 // 3. Configura��o do MassTransit (Apenas Publisher, n�o consome nada)
 builder.Services.AddMassTransit(x =>
 {
-    x.SetLicense("Community");
-    
     x.UsingRabbitMq((context, cfg) =>
     {
         var rabbitHost = builder.Configuration["RabbitMq:Host"] ?? "amqp://guest:guest@localhost:5672";
