@@ -26,6 +26,8 @@ builder.Services.AddScoped<IManagementService, ManagementService>();
 // 3. Configura��o do MassTransit (RabbitMQ com Consumer)
 builder.Services.AddMassTransit(x =>
 {
+    x.SetLicense("Community");
+    
     // Registra o Consumer que escuta a cria��o de produtores
     x.AddConsumer<ProducerRegisteredConsumer>();
 

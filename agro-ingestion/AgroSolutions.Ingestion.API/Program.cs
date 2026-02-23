@@ -11,17 +11,19 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// 1. Configuração do SQLite
+// 1. Configuraï¿½ï¿½o do SQLite
 var connectionString = builder.Configuration.GetConnectionString("Main") ?? "Data Source=database.db";
 builder.Services.AddDbContext<AppDbContext>(opt => opt.UseSqlite(connectionString));
 
-// 2. Injeção de Dependências
+// 2. Injeï¿½ï¿½o de Dependï¿½ncias
 builder.Services.AddScoped<ISensorReadingRepository, SensorReadingRepository>();
 builder.Services.AddScoped<IIngestionService, IngestionService>();
 
-// 3. Configuração do MassTransit (Apenas Publisher, não consome nada)
+// 3. Configuraï¿½ï¿½o do MassTransit (Apenas Publisher, nï¿½o consome nada)
 builder.Services.AddMassTransit(x =>
 {
+    x.SetLicense("Community");
+    
     x.UsingRabbitMq((context, cfg) =>
     {
         var rabbitHost = builder.Configuration["RabbitMq:Host"] ?? "amqp://guest:guest@localhost:5672";
@@ -29,7 +31,7 @@ builder.Services.AddMassTransit(x =>
     });
 });
 
-// 4. Configuração do JWT
+// 4. Configuraï¿½ï¿½o do JWT
 var jwtKey = builder.Configuration["Jwt:Key"] ?? "70a297c2-e6f1-45e5-b48c-a303037d3161";
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
@@ -67,16 +69,16 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 // --- ENDPOINTS ---
-var group = app.MapGroup("/ingestion").RequireAuthorization(); // Exigência do MVP: API Autenticada
+var group = app.MapGroup("/ingestion").RequireAuthorization(); // Exigï¿½ncia do MVP: API Autenticada
 
 group.MapPost("/sensor-data", async (SensorDataRequest request, IngestionService service) =>
 {
     if (request.FieldId == Guid.Empty)
-        return Results.BadRequest("FieldId inválido.");
+        return Results.BadRequest("FieldId invï¿½lido.");
 
     await service.ProcessSensorDataAsync(request);
 
-    // 202 Accepted: recebido, mas o processamento final (alertas) será assíncrono.
+    // 202 Accepted: recebido, mas o processamento final (alertas) serï¿½ assï¿½ncrono.
     return Results.Accepted();
 });
 

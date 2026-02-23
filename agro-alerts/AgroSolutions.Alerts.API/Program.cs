@@ -10,17 +10,19 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// 1. Configuração do SQLite
+// 1. Configuraï¿½ï¿½o do SQLite
 var connectionString = builder.Configuration.GetConnectionString("Main") ?? "Data Source=database.db";
 builder.Services.AddDbContext<AppDbContext>(opt => opt.UseSqlite(connectionString));
 
-// 2. Injeção de Dependências
+// 2. Injeï¿½ï¿½o de Dependï¿½ncias
 builder.Services.AddScoped<IFieldRepository, FieldRepository>();
 builder.Services.AddScoped<IAlertRepository, AlertRepository>();
 
-// 3. Configuração do MassTransit (Consumers)
+// 3. Configuraï¿½ï¿½o do MassTransit (Consumers)
 builder.Services.AddMassTransit(x =>
 {
+    x.SetLicense("Community");
+    
     x.AddConsumer<FieldCreatedConsumer>();
     x.AddConsumer<SensorDataConsumer>();
 
@@ -32,7 +34,7 @@ builder.Services.AddMassTransit(x =>
     });
 });
 
-// 4. Configuração do JWT (Para proteger a leitura dos alertas)
+// 4. Configuraï¿½ï¿½o do JWT (Para proteger a leitura dos alertas)
 var jwtKey = builder.Configuration["Jwt:Key"] ?? "70a297c2-e6f1-45e5-b48c-a303037d3161";
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>

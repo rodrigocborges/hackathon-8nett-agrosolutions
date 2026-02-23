@@ -13,17 +13,19 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// 1. Configuração do SQLite
+// 1. Configuraï¿½ï¿½o do SQLite
 var connectionString = builder.Configuration.GetConnectionString("Main") ?? "Data Source=identity.db";
 builder.Services.AddDbContext<AppDbContext>(opt => opt.UseSqlite(connectionString));
 
-// 2. Injeção de Dependências
+// 2. Injeï¿½ï¿½o de Dependï¿½ncias
 builder.Services.AddScoped<IProducerRepository, ProducerRepository>();
 builder.Services.AddScoped<IProducerService, ProducerService>();
 
-// 3. Configuração do MassTransit (RabbitMQ)
+// 3. Configuraï¿½ï¿½o do MassTransit (RabbitMQ)
 builder.Services.AddMassTransit(x =>
 {
+    x.SetLicense("Community");
+    
     x.UsingRabbitMq((context, cfg) =>
     {
         var rabbitHost = builder.Configuration["RabbitMq:Host"] ?? "amqp://guest:guest@localhost:5672";
@@ -31,7 +33,7 @@ builder.Services.AddMassTransit(x =>
     });
 });
 
-// 4. Configuração do JWT e Autenticação
+// 4. Configuraï¿½ï¿½o do JWT e Autenticaï¿½ï¿½o
 var jwtKey = builder.Configuration["Jwt:Key"] ?? "70a297c2-e6f1-45e5-b48c-a303037d3161"; //apenas um placeholder mesmo
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
@@ -94,7 +96,7 @@ group.MapPost("/login", async (LoginRequest request, IProducerService service) =
     var producer = await service.ValidateLoginAsync(request);
     if (producer == null) return Results.Unauthorized();
 
-    // Geração do Token JWT
+    // Geraï¿½ï¿½o do Token JWT
     var tokenHandler = new JwtSecurityTokenHandler();
     var key = Encoding.ASCII.GetBytes(jwtKey);
     var tokenDescriptor = new SecurityTokenDescriptor
