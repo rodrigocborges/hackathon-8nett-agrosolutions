@@ -1,0 +1,61 @@
+name: 'CD - Agro Ingestion'
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - 'agro-ingestion/**'
+      - 'agro-shared/**'
+      - '.github/workflows/cd-agro-ingestion.yml'
+
+env:
+  SERVICE_NAME: 'agro-ingestion'
+  IMAGE_NAME: 'agro-ingestion'
+  AZURE_RESOURCE_GROUP: 'estudos-fiap'
+  ACR_LOGIN_SERVER: 'acragrosolutions.azurecr.io'
+  CLUSTER_NAME: 'aks-agrosolutions'
+
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 'Checkout Repo'
+        uses: actions/checkout@v4
+
+      - name: 'Login to Azure'
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: 'Login to ACR'
+        uses: azure/docker-login@v1
+        with:
+          login-server: ${{ env.ACR_LOGIN_SERVER }}
+          username: ${{ secrets.ACR_USERNAME }}
+          password: ${{ secrets.ACR_PASSWORD }}
+
+      - name: 'Build and Push Docker Image'
+        run: |
+          docker build . -f ./${{ env.SERVICE_NAME }}/Dockerfile -t ${{ env.ACR_LOGIN_SERVER }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+          docker push ${{ env.ACR_LOGIN_SERVER }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+
+      - name: 'Set AKS Context'
+        uses: azure/aks-set-context@v3
+        with:
+          resource-group: ${{ env.AZURE_RESOURCE_GROUP }}
+          cluster-name: ${{ env.CLUSTER_NAME }}
+
+      - name: 'Create/Update Kubernetes Secrets'
+        run: |
+          kubectl create secret generic agrosolutions-secrets \
+            --from-literal=Jwt__Key='${{ secrets.JWT_KEY }}' \
+            --from-literal=APPLICATIONINSIGHTS_CONNECTION_STRING='${{ secrets.APP_INSIGHTS_CONN_STRING }}' \
+            --from-literal=RabbitMq__Host='${{ secrets.RABBITMQ_HOST }}' \
+            --dry-run=client -o yaml | kubectl apply -f -
+
+      - name: 'Deploy to Kubernetes'
+        run: |
+          sed -i "s|image: .*|image: ${{ env.ACR_LOGIN_SERVER }}/${{ env.IMAGE_NAME }}:${{ github.sha }}|g" ./${{ env.SERVICE_NAME }}/k8s/deployment.yaml
+          kubectl apply -f ./${{ env.SERVICE_NAME }}/k8s/deployment.yaml

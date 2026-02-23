@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: agro-management-deployment
+  labels:
+    app: agro-management
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: agro-management
+  template:
+    metadata:
+      labels:
+        app: agro-management
+    spec:
+      containers:
+      - name: agro-management
+        image: acragrosolutions.azurecr.io/agro-management:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+        envFrom:
+        - secretRef:
+            name: agrosolutions-secrets
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: agro-management-service
+spec:
+  type: ClusterIP
+  selector:
+    app: agro-management
+  ports:
+  - port: 80
+    targetPort: 8080

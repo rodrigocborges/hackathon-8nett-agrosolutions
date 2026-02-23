@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: agro-identity-deployment
+  labels:
+    app: agro-identity
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: agro-identity
+  template:
+    metadata:
+      labels:
+        app: agro-identity
+    spec:
+      containers:
+      - name: agro-identity
+        # A tag "latest" será substituída pelo SHA do commit no GitHub Actions
+        image: acragrosolutions.azurecr.io/agro-identity:latest 
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+        envFrom:
+        - secretRef:
+            name: agrosolutions-secrets # Carrega RabbitMq__Host, Jwt__Key, etc.
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: agro-identity-service
+spec:
+  type: ClusterIP
+  selector:
+    app: agro-identity
+  ports:
+  - port: 80
+    targetPort: 8080

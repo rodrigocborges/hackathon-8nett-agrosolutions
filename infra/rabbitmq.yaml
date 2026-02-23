@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rabbitmq-deployment
+  labels:
+    app: rabbitmq
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rabbitmq
+  template:
+    metadata:
+      labels:
+        app: rabbitmq
+    spec:
+      containers:
+      - name: rabbitmq
+        image: rabbitmq:3-management-alpine # Versão leve e com Dashboard UI
+        ports:
+        - containerPort: 5672  # Porta de comunicação AMQP (Microsserviços)
+          name: amqp
+        - containerPort: 15672 # Porta do Dashboard Visual (Navegador)
+          name: management
+        env:
+        - name: RABBITMQ_DEFAULT_USER
+          value: "guest"
+        - name: RABBITMQ_DEFAULT_PASS
+          value: "guest"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  # O nome deste service vira o "DNS" dentro do Kubernetes.
+  # É por isso que os microsserviços vão chamar "rabbitmq" na connection string.
+  name: rabbitmq 
+spec:
+  type: ClusterIP # Exposto para você acessar o Dashboard pelo IP Público
+  selector:
+    app: rabbitmq
+  ports:
+  - name: amqp
+    port: 5672
+    targetPort: 5672
+  - name: management
+    port: 15672
+    targetPort: 15672

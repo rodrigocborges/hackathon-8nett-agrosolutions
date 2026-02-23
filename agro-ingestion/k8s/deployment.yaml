@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: agro-ingestion-deployment
+  labels:
+    app: agro-ingestion
+spec:
+  # Pode aumentar as réplicas no futuro se tiver muitos sensores
+  replicas: 1 
+  selector:
+    matchLabels:
+      app: agro-ingestion
+  template:
+    metadata:
+      labels:
+        app: agro-ingestion
+    spec:
+      containers:
+      - name: agro-ingestion
+        image: acragrosolutions.azurecr.io/agro-ingestion:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+        envFrom:
+        - secretRef:
+            name: agrosolutions-secrets
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: agro-ingestion-service
+spec:
+  type: ClusterIP
+  selector:
+    app: agro-ingestion
+  ports:
+  - port: 80
+    targetPort: 8080

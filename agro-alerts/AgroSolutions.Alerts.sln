@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgroSolutions.Alerts.Infras
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgroSolutions.Alerts.Tests", "AgroSolutions.Alerts.Tests\AgroSolutions.Alerts.Tests.csproj", "{6D322583-EED3-4387-839F-E6A5024DABA6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgroSolutions.Shared", "..\agro-shared\AgroSolutions.Shared\AgroSolutions.Shared.csproj", "{ADD1F8E8-FFBE-48D9-82B7-C7666D09FFD4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,5 +44,9 @@ Global
 		{6D322583-EED3-4387-839F-E6A5024DABA6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6D322583-EED3-4387-839F-E6A5024DABA6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6D322583-EED3-4387-839F-E6A5024DABA6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ADD1F8E8-FFBE-48D9-82B7-C7666D09FFD4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ADD1F8E8-FFBE-48D9-82B7-C7666D09FFD4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ADD1F8E8-FFBE-48D9-82B7-C7666D09FFD4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ADD1F8E8-FFBE-48D9-82B7-C7666D09FFD4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

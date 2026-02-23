@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: agro-alerts-deployment
+  labels:
+    app: agro-alerts
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: agro-alerts
+  template:
+    metadata:
+      labels:
+        app: agro-alerts
+    spec:
+      containers:
+      - name: agro-alerts
+        image: acragrosolutions.azurecr.io/agro-alerts:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+        envFrom:
+        - secretRef:
+            name: agrosolutions-secrets
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: agro-alerts-service
+spec:
+  type: ClusterIP
+  selector:
+    app: agro-alerts
+  ports:
+  - port: 80
+    targetPort: 8080

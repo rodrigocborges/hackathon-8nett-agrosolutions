@@ -5,6 +5,10 @@
     <ProjectReference Include="..\..\agro-shared\AgroSolutions.Shared\AgroSolutions.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="MassTransit" Version="9.0.1" />
+  </ItemGroup>
+
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
