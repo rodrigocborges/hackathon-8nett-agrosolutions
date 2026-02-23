@@ -47,11 +47,10 @@ builder.Services.AddAuthorization();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-//TODO: Descomentar em prod
-//builder.Services.AddApplicationInsightsTelemetry(options =>
-//{
-//    options.ConnectionString = builder.Configuration["APPLICATIONINSIGHTS_CONNECTION_STRING"];
-//});
+builder.Services.AddApplicationInsightsTelemetry(options =>
+{
+   options.ConnectionString = builder.Configuration["APPLICATIONINSIGHTS_CONNECTION_STRING"];
+});
 
 var app = builder.Build();
 
@@ -69,7 +68,7 @@ app.UseAuthorization();
 // --- ENDPOINTS ---
 var group = app.MapGroup("/ingestion").RequireAuthorization(); // Exig�ncia do MVP: API Autenticada
 
-group.MapPost("/sensor-data", async (SensorDataRequest request, IngestionService service) =>
+group.MapPost("/sensor-data", async (SensorDataRequest request, IIngestionService service) =>
 {
     if (request.FieldId == Guid.Empty)
         return Results.BadRequest("FieldId inv�lido.");

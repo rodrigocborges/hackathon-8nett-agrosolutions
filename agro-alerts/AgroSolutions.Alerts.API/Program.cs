@@ -49,10 +49,10 @@ builder.Services.AddAuthorization();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-//builder.Services.AddApplicationInsightsTelemetry(options =>
-//{
-//    options.ConnectionString = builder.Configuration["APPLICATIONINSIGHTS_CONNECTION_STRING"];
-//});
+builder.Services.AddApplicationInsightsTelemetry(options =>
+{
+   options.ConnectionString = builder.Configuration["APPLICATIONINSIGHTS_CONNECTION_STRING"];
+});
 
 var app = builder.Build();
 
